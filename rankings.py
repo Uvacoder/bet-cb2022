@@ -1,3 +1,4 @@
+from re import L
 from RandomEdgeMarkov import GaussianEdgeMarkov as gev
 import pandas as pd
 import numpy as np
@@ -10,7 +11,10 @@ team_names = [team.name for team in teams]
 # could do ols to get a real estimate for this; just using estimate from other analysis rn
 hca = 1.25
 
-def margin_f(margin, k=.03):
+# TODO: pull from other file
+SIGMA = 15
+
+def margin_f(margin, k=.05):
     return 1 / (1 + np.exp(-k * margin))
 
 def get_games_played(data):
@@ -32,11 +36,10 @@ def load_data(use_cache=False):
         return pd.DataFrame()
 
 def update_data(data):
-    print(data.head())
     # keep track of which boxscore indices have been counted
     print('Updating data')
     data = data.to_dict(orient='list')
-    tracked_games = data.index.values.tolist() + [None]
+    tracked_games = list(data.keys()) + [None]
     for team in teams:
         team_name = team.name
         for game in team.schedule:
@@ -49,11 +52,13 @@ def update_data(data):
                     data[game.boxscore_index] = [game.boxscore_index, team_name, game.opponent_name, game.points_for, game.points_against, game.location, game.datetime]
                 print('New game: ', game.boxscore_index, data[game.boxscore_index])
                 tracked_games.append(game.boxscore_index)
+    for key, value in data.items():
+        print(key, value)
     return pd.DataFrame.from_dict(data, orient='index', columns=['index', 'team_name', 'opponent_name', 'points_for', 'points_against', 'location', 'datetime'])
 
 def get_adjacency_matrix(data):
     mat = pd.DataFrame(np.zeros((len(team_names), len(team_names))), index=team_names, columns=team_names)
-    mat = gev(mat)
+    graph = gev(mat)
     tracked_games = data.index.tolist()
     for g in tracked_games:
         if g is None:
@@ -64,31 +69,56 @@ def get_adjacency_matrix(data):
             margin -= hca
         elif game_data['location'] == 'Away':
             margin += hca
-        # else margin is neutral and we do not adjust
-        margin_val = margin_f(margin)
-        # TODO: how to choose sigma
-        sigma = .2
+        sigma = SIGMA
         team_name = game_data['team_name']
         opp_name = game_data['opponent_name']
-        if mat.exists_edge(team_name, opp_name):
-            # im gonna have to handle these differently im just not ready yet
-            mat.add_to_edge(team_name, opp_name, margin_val, sigma)
-            mat.add_to_edge(opp_name, team_name, 1 - margin_val, sigma)
+        if graph.exists_edge(team_name, opp_name):
+            graph.mat.loc[team_name, opp_name] += [margin]
+            graph.mat.loc[opp_name, team_name] += [-margin]
         else: 
-            mat.add_edge(team_name, opp_name, margin_val, sigma)
-            mat.add_edge(opp_name, team_name, 1 - margin_val, sigma)
-    return mat
+            graph.mat.loc[team_name, opp_name] = [margin]
+            graph.mat.loc[opp_name, team_name] = [-margin]
+    return graph
 
 def normalize_row_el(el, games_played):
-    if el == 0:
-        return 0
-    else:
-        return (el[0] / games_played, el[1]/ np.sqrt(games_played))
+    return el / games_played
 
+def adjust_margin(graph):
+    dim = graph.mat.shape[0]
+    mat = graph.mat
+    for i in range(dim):
+        for j in range(dim):
+            if mat.iloc[i, j] == 0:
+                continue
+            mat.iloc[i, j] = margin_f(mat.iloc[i, j])
+    return mat
+
+def transform_mat(graph):
+    # takes matrix of lists and turns it into matrix of tuples of form (mean, stdev)
+    dim = graph.mat.shape[0]
+    mat = graph.mat
+    for i in range(dim):
+        for j in range(dim):
+            if mat.iloc[i, j] == 0:
+                continue
+            n = len(mat.iloc[i, j])
+            stdev = SIGMA / np.sqrt(n)
+            mean = np.mean(mat.iloc[i, j])
+            mat.iloc[i, j] = (mean, stdev)
+    graph = gev(mat)
+    return graph
+
+def get_sample(graph):
+    sample = graph.monte_carlo_sample(n=100)
+    res = []
+    for s in sample:
+        s = adjust_margin(s)
+        res.append(s)
+    return res
+    
 def normalize_mat(mat, games_played_counter):
     # TODO: change notation; mat should just be the matrix in the graph object
-    # mat = np.transpose(mat.mat.to_numpy())
-    mat = mat.mat.to_numpy()
+    mat = mat.to_numpy()
     new_mat = np.array(mat.shape)
     for i in range(len(mat)):
         # when we scale down by a factor k, variance of Gaussian changes by factor of sqrt(k)
@@ -101,8 +131,16 @@ def normalize_mat(mat, games_played_counter):
     return mat
 
 def get_rankings(mat, games_played_counter):
-    mat = normalize_mat(mat, games_played_counter)
-    r = mat.mc_stationary_dist(n=100)
+    graph = transform_mat(mat)
+    sample = get_sample(graph)
+    res = []
+    counter = 1
+    for s in sample:
+        print(counter)
+        counter += 1
+        s = normalize_mat(s, games_played_counter)
+        res.append(s)
+    r = gev.mean_stationary_dist(res)
     return r
 
 def write_games_to_csv(data):
@@ -120,7 +158,7 @@ def display_rankings(vec, teams_list):
 def main():
     data = load_data(use_cache=True)
     # data = update_data(data)
-    write_games_to_csv(data)
+    # write_games_to_csv(data)
     data.set_index('index', inplace=True)
     mat = get_adjacency_matrix(data)
     games_played_counter = get_games_played(data)

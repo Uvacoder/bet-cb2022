@@ -31,7 +31,7 @@ class Graph():
         return self.mat.iloc[i, j]
 
     def get_stationary_dist(self):
-        mat = self.mat.to_numpy()
+        mat = self.mat.to_numpy().astype(float)
         mat = np.transpose(mat)
         val, vec = eigs(mat, which='LM', k=1)
         vec = np.ndarray.flatten(abs(vec))
@@ -103,11 +103,19 @@ class GaussianEdgeMarkov(Graph):
         Returns the stationary distribution of the graph.
         '''
         samples = self.monte_carlo_sample(n)
-        dim = self.mat.shape[0]
         res = []
         for s in samples:
             res.append(s.get_stationary_dist())
         res = np.array(res)
         # may also just be interesting to look at the distribution of the stationary distribution, not just mean
         return np.average(res, axis=0)
+    
+    @staticmethod
+    def mean_stationary_dist(sample):
+        res = []
+        for s in sample:
+            res.append(s.get_stationary_dist())
+        res = np.array(res)
+        return np.average(res, axis=0)
+
         
