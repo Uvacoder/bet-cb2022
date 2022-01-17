@@ -116,6 +116,6 @@ class GaussianEdgeMarkov(Graph):
         for s in sample:
             res.append(s.get_stationary_dist())
         res = np.array(res)
-        return np.average(res, axis=0)
+        return res, np.average(res, axis=0)
 
         
