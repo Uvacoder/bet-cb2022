@@ -1,4 +1,4 @@
-team_name,opponent_name,points_for,points_against,location,datetime,
+boxscore_index,team_name,opponent_name,points_for,points_against,location,datetime
 2021-11-09-20-utah,Abilene Christian,Utah,56,70,Away,11/9/21 20:00
 2021-11-12-20-texas-am,Abilene Christian,Texas A&M,80,81,Away,11/12/21 20:00
 2021-11-16-20-texas-arlington,Abilene Christian,Texas-Arlington,80,71,Away,11/16/21 20:00
@@ -2594,3 +2594,61 @@ team_name,opponent_name,points_for,points_against,location,datetime,
 2021-12-22-18-west-virginia,West Virginia,Youngstown State,82,52,Home,12/22/21 18:00
 2022-01-15-14-western-carolina,Western Carolina,Wofford,64,84,Home,1/15/22 14:00
 2022-01-15-19-youngstown-state,Wright State,Youngstown State,87,90,Away,1/15/22 19:00
+2022-01-17-20-alcorn-state,Alcorn State,Prairie View,73,74,Home,1/17/22 20:30
+2022-01-16-14-american,American,Bucknell,63,55,Home,1/16/22 14:00
+2022-01-17-16-arizona-state,Arizona State,Utah,64,62,Home,1/17/22 16:00
+2022-01-17-20-arkansas-pine-bluff,Arkansas-Pine Bluff,Bethune-Cookman,69,63,Home,1/17/22 20:30
+2022-01-16-14-lafayette,Army,Lafayette,54,68,Away,1/16/22 14:00
+2022-01-16-13-maine,Binghamton,Maine,73,65,Away,1/16/22 13:00
+2022-01-16-13-boston-university,Boston University,Navy,65,72,Home,1/16/22 13:00
+2022-01-16-20-illinois-state,Bradley,Illinois State,65,74,Away,1/16/22 20:00
+2022-01-17-17-brown,Brown,Yale,63,66,Home,1/17/22 17:00
+2022-01-17-19-bryant,Bryant,Saint Francis (PA),82,52,Home,1/17/22 19:00
+2022-01-16-12-villanova,Butler,Villanova,42,82,Away,1/16/22 12:00
+2022-01-17-22-california-baptist,California Baptist,Seattle,85,92,Home,1/17/22 22:00
+2022-01-16-14-manhattan,Canisius,Manhattan,75,80,Away,1/16/22 14:00
+2022-01-17-19-sacred-heart,Central Connecticut State,Sacred Heart,66,74,Away,1/17/22 19:00
+2022-01-17-16-florida-atlantic,Charlotte,Florida Atlantic,67,96,Away,1/17/22 16:00
+2022-01-16-13-wichita-state,Cincinnati,Wichita State,61,57,Away,1/16/22 13:00
+2022-01-17-19-citadel,The Citadel,Mercer,64,71,Home,1/17/22 19:00
+2022-01-17-19-college-of-charleston,College of Charleston,North Carolina-Wilmington,78,86,Home,1/17/22 19:00
+2022-01-17-19-dartmouth,Dartmouth,Harvard,59,60,Home,1/17/22 19:00
+2022-01-17-19-northeastern,Delaware,Northeastern,82,76,Away,1/17/22 19:00
+2022-01-17-20-missouri-kansas-city,Denver,Kansas City,63,55,Away,1/17/22 20:00
+2022-01-17-20-southern-illinois,Drake,Southern Illinois,60,59,Away,1/17/22 20:00
+2022-01-17-16-hofstra,Drexel,Hofstra,68,71,Away,1/17/22 16:00
+2022-01-17-16-eastern-illinois,Eastern Illinois,Murray State,46,72,Home,1/17/22 16:30
+2022-01-17-16-elon,Elon,James Madison,90,67,Home,1/17/22 16:00
+2022-01-16-14-quinnipiac,Fairfield,Quinnipiac,66,72,Away,1/16/22 14:00
+2022-01-17-19-wagner,Fairleigh Dickinson,Wagner,64,95,Away,1/17/22 19:00
+2022-01-17-20-mississippi-valley-state,Florida A&M,Mississippi Valley State,78,70,Away,1/17/22 20:30
+2022-01-17-14-george-washington,George Mason,George Washington,76,77,Away,1/17/22 14:00
+2022-01-16-16-st-johns-ny,Georgetown,St. John's (NY),69,88,Away,1/16/22 16:30
+2022-01-17-14-howard,Howard,Notre Dame,68,71,Home,1/17/22 14:30
+2022-01-17-21-idaho-state,Idaho State,Weber State,61,78,Home,1/17/22 21:00
+2022-01-17-20-northern-arizona,Idaho,Northern Arizona,72,74,Away,1/17/22 20:00
+2022-01-17-12-illinois,Illinois,Purdue,88,96,Home,1/17/22 12:00
+2022-01-17-18-nebraska,Indiana,Nebraska,78,71,Away,1/17/22 18:00
+2022-01-16-13-iona,Iona,Niagara,78,55,Home,1/16/22 13:00
+2022-01-16-14-minnesota,Iowa,Minnesota,81,71,Away,1/16/22 14:00
+2022-01-17-18-jackson-state,Jackson State,Texas Southern,61,58,Home,1/17/22 18:00
+2022-01-17-19-north-florida,Kennesaw State,North Florida,62,60,Away,1/17/22 19:00
+2022-01-17-16-saint-josephs,La Salle,Saint Joseph's,75,64,Away,1/17/22 16:00
+2022-01-17-19-stephen-f-austin,Lamar,Stephen F. Austin,78,86,Away,1/17/22 19:30
+2022-01-16-18-lehigh,Lehigh,Loyola (MD),57,69,Home,1/16/22 18:00
+2022-01-17-15-st-francis-ny,Long Island University,St. Francis (NY),80,65,Away,1/17/22 15:00
+2022-01-16-15-southern-mississippi,Louisiana Tech,Southern Mississippi,76,62,Away,1/16/22 15:00
+2022-01-17-19-loyola-marymount,Loyola Marymount,Portland,70,58,Home,1/17/22 19:00
+2022-01-16-14-marist,Marist,Monmouth,84,48,Home,1/16/22 14:00
+2022-01-17-16-stony-brook,Maryland-Baltimore County,Stony Brook,51,65,Away,1/17/22 16:00
+2022-01-17-16-maryland-eastern-shore,Maryland-Eastern Shore,Norfolk State,58,72,Home,1/17/22 16:00
+2022-01-17-15-merrimack,Merrimack,Mount St. Mary's,50,57,Home,1/17/22 15:00
+2022-01-17-21-san-jose-state,Nevada-Las Vegas,San Jose State,81,56,Away,1/17/22 21:00
+2022-01-17-20-nevada,Nevada,Wyoming,67,77,Home,1/17/22 20:00
+2022-01-16-12-ohio-state,Ohio State,Penn State,61,56,Home,1/16/22 12:00
+2022-01-17-16-princeton,Pennsylvania,Princeton,64,74,Away,1/17/22 16:00
+2022-01-17-21-southern-utah,Portland State,Southern Utah,76,86,Away,1/17/22 21:00
+2022-01-16-14-rider,Rider,Saint Peter's,51,58,Home,1/16/22 14:00
+2022-01-17-19-southern-illinois-edwardsville,SIU Edwardsville,Belmont,64,80,Home,1/17/22 19:00
+2022-01-17-14-tennessee-state,Tennessee State,Tennessee Tech,80,64,Home,1/17/22 14:00
+2022-01-17-19-william-mary,Towson,William & Mary,91,69,Away,1/17/22 19:00

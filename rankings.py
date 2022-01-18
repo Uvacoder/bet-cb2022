@@ -13,6 +13,8 @@ hca = 1.25
 # TODO: pull from other file
 SIGMA = 15
 
+num_sample = 100
+
 def margin_f(margin, k=.03):
     return 1 / (1 + np.exp(-k * margin))
 
@@ -28,7 +30,7 @@ def load_data(use_cache=False):
         try:
             with open('data/games.csv', 'r') as f:
                 reader = csv.reader(f)
-                data = {rows[0]:rows[1:] for rows in reader}
+                data = {row[0]:row[1:] for row in reader if row[0].startswith('2')}
                 return data
         except FileNotFoundError:
             print('File not found, loading from scratch')
@@ -54,13 +56,15 @@ def update_data(data, write=False):
                 print(data[game.boxscore_index])
                 tracked_games.append(game.boxscore_index)
     cols = ['team_name', 'opponent_name', 'points_for', 'points_against', 'location', 'datetime']
+    df_index = 'boxscore_index'
     if write:
         with open('data/games.csv', 'w') as f:
             writer = csv.writer(f)
-            # writer.writerow(cols)
+            writer.writerow([df_index] + cols)
             for key in data.keys():
                 writer.writerow([key] + data[key])
     df = pd.DataFrame.from_dict(data, orient='index', columns=cols)
+    # df.set_index('boxscore_index', inplace=True)
     return df
 
 def get_adjacency_matrix(data):
@@ -76,8 +80,10 @@ def get_adjacency_matrix(data):
             print('Error :' + str(g))
             continue
         game_data = data.loc[g,]
+        print('hello??')
+        print(game_data['points_for'], game_data['points_against'])
         print(game_data)
-        margin = game_data['points_for'] - game_data['points_against']
+        margin = int(game_data['points_for']) - int(game_data['points_against'])
         if game_data['location'] == 'Home':
             margin -= hca
         elif game_data['location'] == 'Away':
@@ -122,7 +128,7 @@ def transform_mat(graph):
     return graph
 
 def get_sample(graph):
-    sample = graph.monte_carlo_sample(n=100)
+    sample = graph.monte_carlo_sample(n=num_sample)
     res = []
     for s in sample:
         s = adjust_margin(s)
